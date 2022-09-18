@@ -23,26 +23,34 @@ function drawCell(imageData, x, y, w, h) {
   let brightness = 0.2126 * red + 0.7152 * green + 0.0722 * blue;
 
   //
-  let new_width = (1.0 - brightness / 255) * w;
+  let new_width = Math.round((1.0 - brightness / 255) * w);
 
   // fill background
   // ctx.fillStyle = 'linear-gradient(blue, pink)';
   ctx.fillStyle = "black";
   ctx.fillRect(x, y, w, h);
 
-  ctx.fillStyle = `rgba(${red}, ${green}, ${blue}, 0.25)`;
-  ctx.fillRect(x, y, w, h);
+  // ctx.fillStyle = `rgba(${red}, ${green}, ${blue}, 1)`;
+  // ctx.fillRect(x, y, w, h);
 
   //
   let middle_x = x + w / 2;
   let new_x = middle_x - new_width / 2;
-  ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-  ctx.fillRect(new_x, y, new_width, h - 1);
+  ctx.fillStyle = `rgba(${red}, ${green}, ${blue}, 1)`;
+
+  let verticalSpacing = 2;
+  let minWidth = 3;
+
+  x = Math.floor(new_x);
+  y = Math.round(y + verticalSpacing / 2);
+  w = Math.max(Math.round(new_width), minWidth);
+  h = Math.round(h - verticalSpacing);
+
+  ctx.fillRect(x, y, w, h);
 }
 
 
 image.addEventListener("load", event => {
-  console.log("fyfan");
   // draw image
   ctx.drawImage(image, 0, 0, image.width, image.height);
 
@@ -58,7 +66,7 @@ image.addEventListener("load", event => {
 
   // create grid
   let grid_size_x = 12;
-  let grid_size_y = 16;
+  let grid_size_y = 24;
   for (let y = 0; y < image.height; y += grid_size_y) {
     for (let x = 0; x < image.width; x += grid_size_x) {
       // draw cells
