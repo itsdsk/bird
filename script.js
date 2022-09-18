@@ -6,7 +6,11 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const image = document.querySelector("img");
+const image = document.createElement('IMG');
+image.setAttribute('src', 'bird.jpg');
+
+
+
 
 function drawCell(imageData, x, y, w, h) {
   // get pixel colour
@@ -36,7 +40,8 @@ function drawCell(imageData, x, y, w, h) {
   ctx.fillRect(new_x, y, new_width, h - 1);
 }
 
-image.addEventListener("load", (event) => {
+
+image.addEventListener("load", event => {
   console.log("fyfan");
   // draw image
   ctx.drawImage(image, 0, 0, image.width, image.height);
